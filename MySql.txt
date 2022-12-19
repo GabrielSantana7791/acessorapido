@@ -1,0 +1,149 @@
+mysql -u <usuário> -p
+\! cls; limpar
+
+//criar banco de dados
+CREATE DATABASE <nome do banco>;
+
+//deletar banco de dados
+//DROP DATABASE <nome do banco>;
+
+CREATE TABLE minhatabela (
+	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	nome VARCHAR(2),
+	sobrenome VARCHAR(2),
+	CHECK(nome = 'Rodolfo'); //Ele vai rejeitar todos Rodolfos
+);
+
+tipos de dados mais usados:
+texto: VARCHAR(<numero de caracteres>)
+numero: 
+datas:
+
+//selecionar dados
+SELECT <colunas> FROM <nome tabela>;
+SELECT <colunas> FROM <nome_tabela> WHERE <coluna> = <valor>;
+
+
+//alterar tabela
+ALTER TABLE <nome tabela> ADD COLUMN <nome da coluna> VARCHAR(5);
+ALTER TABLE <nome tabela> AD UNIQUE (<coluna>)
+ALTER TALBE <nome> MODIFY <coluna> <type>
+ALTER TABLE <nome> CHANGE <nome antigo> <nome novo> <tipo>
+//inserir na tabela
+INSERT INTO <nome tabela> (<variaveis>) VALUES (<valor variaveis>);
+//renomear tabela
+RENAME TABLE <antigo_nome> TO <novo_nome>
+//dropar primary key
+ALTER TABLE <nome tabela> DROP PRIMARY KEY;
+
+//update na tabela
+UPDATE <nome da tabela> SET <coluna> = <value> WHERE .... OBS: IS NULL;
+
+//deletar na tabela
+DELETE FROM <tabela> WHERE ... AND ...;
+
+//truncar (eliminar tudo da tabela)
+//truncate <table>
+
+SELECT * FROM autor LIMIT 2;
+//CONSTRAINT
+FOREIGN KEY (<nome da coluna>) REFERENCES <nome tabela>
+(<nome coluna da tabela referenciada>);
+ALTER TABLE log DROP FOREIGN KEY IF EXISTS log_ibfk_1;
+SELECT * FROM information_schema.INNODB_SYS_FOREIGN_COLS;
+
+
+//join
+*INNER JOIN
+*LEFT JOIN
+*RIGHT JOIN
+
+SELECT inventario.slot, users.userName from inventario JOIN users ON users.id = inventario.user_id WHERE slot = 5;
+SELECT users.userName, inventario.slot FROM users JOIN inventario ON users.id = inventario.user_id WHERE userName = "elrubrum";
+
+//TRIGGER
+use lc;
+CREATE TRIGGER Tgr_users_insert 
+AFTER INSERT ON users
+FOR EACH ROW
+INSERT INTO inventario (slot, user_id) VALUES (2, NEW.id);
+///////////////////////////////////////////////////////
+
+
+//INDEX
+ALTER TABLE <nome tabela> ADD INDEX (<coluna>);
+CREATE INDEX <nome_index> ON <nome tabela> (<coluna>);
+DROP INDEX <nome_index> ON <nome_tabela>;
+SHOW index ON <nome_tabela>;
+
+//criar usuario
+CREATE USER 'nome'@'localhost' IDENTIFIED BY 'senha';
+DROP USER 'nome'@'localhost';
+
+//alterar senha
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'nva senha'
+
+//alterar nome
+
+//deletar usuario
+DROP USER 'user';
+
+
+///permissão
+GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' WITH GRANT OPTION;  
+//WITH GRANT OPTION da permissão para dar permissão kk
+
+
+///stored procedures
+//criar
+CREATE PROCEDURE nomeProcedimento (variavel tinytext)
+SELECT * FROM tabela
+WHERE nome = variavel;
+
+//utilizar
+call nomeProcedimento(variaveis);
+
+//dropar
+DROP PROCEDURE nomeProcedimento;
+
+//ver lista
+ SELECT SPECIFIC_NAME FROM information_SCHEMA.ROUTINES;
+
+///view
+
+//criar
+CREATE VIEW nomeView AS <query....>
+
+//dropar
+DROP VIEW nomeView;
+
+//ver views
+SELECT TABLE_NAME FROM information_SCHEMA.VIEWS;
+
+///exportar/importar
+**Importar arquivo csv
+LOAD DATA INFILE 'C:/Users/gabri/Desktop/DB/teste_csv.csv'
+INTO TABLE teste_csv
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(nome, idade);
+
+
+**Exportar arquivo csv
+(SELECT 'coluna1', 'coluna2')
+UNION
+SELECT * from teste_csv
+INTO OUTFILE 'C:/Users/gabri/Desktop/DB/teste_csv2.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
+
+
+
+/etc/init.d/mysql start 
+
+SHOW VARIABLES LIKE "%version%";  
+
