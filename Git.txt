@@ -1,24 +1,107 @@
-10 V
-22 V
-24 V
-27 V
-30 V
-31
-32 V
-33 V
-36 V
-37 V
-39 V
-44 X
-46 X
-48 V
-50 X
-52 V
-56 V
-58 V
-61 V
-62 V
-69
-75 V
-81 V
-95 V
+///deletar branch
+git --delete <branch>
+git -d <branch>
+//deletar branch no repositorio remoto
+git push origin --delete <branch>
+
+
+
+//adicionar origin
+git remote add origin <url>
+
+//listar branch
+git branch -a/--all mostra todas as branchs inclusive as da nuv
+
+
+//deletar branch remota
+git remote rm origin
+
+//set upstream
+//--set-upstream origin master
+
+///staging area
+/adicionar a staging area
+git add .
+//remover da staging area
+/git restore --staged *
+
+///pull
+pull sem fazer merge, ou seja, empurra o commit local para ultimo
+git pull --rebase
+
+///commit
+//Deletar ultimo commit ainda não lançado no rep remoto
+git reset <id do commit que deseja voltar>
+
+
+///amend emendar
+simplesmente emenda o commit com arquivos na stagging area e/ou
+altera o nome do commit
+git commit --amend
+
+///log dos commits deletados e/ou todas alterações
+git reflog
+
+///Trazer para a branch um commit específico
+git cherry-pick <commid id>
+git cherry-pick -n <commid id>
+-n para nao fazer commit
+
+///VEr quais arquivos foram mudados em 1 commit
+git diff-tree -r <commit>
+
+
+///reset
+git reset <commid id ou HEAD>
+git reset --soft mantem staging area e working tree. Mudanças vao p/
+working tree
+
+hard apaga staging area e working tree e as mudanças
+
+mixed apaga staging area. Mudanças vao p/
+working tree
+
+
+///limpar working tree
+git clean -i
+-i remove de forma interativa
+-n mostra os arquivos a deletar
+--force força
+-q remove quieto
+
+
+///git tag
+git tag <nome da tag> -m "descrição"
+git checkout <tag>
+git push <remote> <tag>
+git push <remote> --tags (todas as tags)
+git pull --tags
+
+
+///arquivos muito grandes
+baixar git lfs
+ir no git bash e instalar git lfs install
+git lfs track <arquivo>
+um arquivo oculto vai ser gerado .gitattributes
+
+///hooks
+//configurar para um rep
+git config core.hookspath <path>
+//configurar global
+git config --global core.hookspath <path>
+
+
+///git config
+system = configura para todos os usuarios do sistema
+global = configura para o usuário específico
+local = apenas para aquele repositório
+
+///git alias
+git config --local alias.command 'log --oneline'
+
+//lista de alias
+git config --get-regexp ^alias
+
+///usuario
+git config user.name 'username'
+git config user.email 'email'
